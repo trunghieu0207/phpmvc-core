@@ -39,14 +39,14 @@ $app = new Application(dirname(__DIR__), $config);
 $app->setTwigTemplate($twig);
 $app->twig->addGlobalFunction('session', Application::$APPLICATION->session);
 
-if (!empty($_SESSION['user'])) {
-    $helper = new Helper();
-    $page = $helper->getPage();
-    $lang = $helper->getSettings()->getLanguage();
-    $language = $page . '/' . $lang . '.php';
-    require_once __DIR__ . '/../app/translates/resources/' . $language;
-    require_once __DIR__ . '/../app/translates/resources/common/common.' . $lang . '.php'  ;
-}
+//if (!empty($_SESSION['user'])) {
+//    $helper = new Helper();
+//    $page = $helper->getPage();
+//    $lang = $helper->getSettings()->getLanguage();
+//    $language = $page . '/' . $lang . '.php';
+//    require_once __DIR__ . '/../app/translates/resources/' . $language;
+//    require_once __DIR__ . '/../app/translates/resources/common/common.' . $lang . '.php'  ;
+//}
 
 //$app->on(Application::EVENT_BEFORE_REQUEST, function() {
 //    echo 'Before request';
