@@ -6,8 +6,6 @@ use App\Core\Controller\BaseController;
 use App\Core\Request\Request;
 use App\Core\Response\Response;
 
-use function Composer\Autoload\includeFile;
-
 class Router
 {
     protected array $router = [];
@@ -71,7 +69,8 @@ class Router
         if (empty($callback)) {
             $this->response->setStatusCode(404);
 
-            return Application::$APPLICATION->twig->render('_404');
+            Application::$APPLICATION->smarty->display('_404.tpl');
+            return;
         }
         if (is_array($callback)) {
             if (!empty($class['middleware'])) {
@@ -85,7 +84,7 @@ class Router
             }
 
             /**@var BaseController $controller */
-            $controller = new $callback[0](Application::$APPLICATION->twig, $this->request, $this->response);
+            $controller = new $callback[0]($this->request, $this->response);
             Application::$APPLICATION->controller = $controller;
             $controller->action = $callback[1];
             $callback[0] = $controller;

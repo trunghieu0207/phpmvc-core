@@ -7,6 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Core\Application;
 use App\Core\Helper\Helper;
+use App\Core\View\CustomSmarty;
 use App\Core\View\Twig;
 use App\Model\User;
 use App\route\Route;
@@ -25,19 +26,21 @@ $config = [
     ]
 ];
 
-$pathViews = dirname(__DIR__) . '/views';
-$pathCache = dirname(__DIR__) . '/cache';
+$path_view = dirname(__DIR__) . '/views';
+$path_cache = dirname(__DIR__) . '/cache';
 
 $options = [
-    'cache' => $pathCache,
+    'cache' => $path_cache,
     'debug' => $_ENV['APP_DEBUG'],
 ];
 
-$twig = new Twig($pathViews, $options);
+//$twig = new Twig($pathViews, $options);
 
-$app = new Application(dirname(__DIR__), $config);
-$app->setTwigTemplate($twig);
-$app->twig->addGlobalFunction('session', Application::$APPLICATION->session);
+$smarty = new CustomSmarty($path_view, $path_cache);
+
+$app = new Application(dirname(__DIR__), $config, $smarty);
+$app->setSmartyTemplate($smarty);
+//$app->twig->addGlobalFunction('session', Application::$APPLICATION->session);
 
 //if (!empty($_SESSION['user'])) {
 //    $helper = new Helper();

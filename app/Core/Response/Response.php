@@ -2,20 +2,17 @@
 
 namespace App\Core\Response;
 
+use App\Core\View\CustomSmarty;
+
 use const App\Core\Helper\PREFIX_PUBLIC;
 
 class Response
 {
-    private function setHeaderForAPI()
+    public CustomSmarty $smarty;
+
+    public function __construct(CustomSmarty $smarty)
     {
-        header("Access-Control-Allow-Origin: *");
-        header("Content-Type: application/json; charset=UTF-8");
-        header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
-        header("Access-Control-Max-Age: 3600");
-        header("Access-Control-Allow-Credentials: true");
-        header(
-            "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, X-Custom-Headers"
-        );
+        $this->smarty = $smarty;
     }
 
     public function setStatusCode(int $status)
@@ -54,5 +51,10 @@ class Response
     {
         $this->setHeaderForAPI();
         return json_encode($data);
+    }
+
+    public function view(): CustomSmarty
+    {
+        return $this->smarty;
     }
 }

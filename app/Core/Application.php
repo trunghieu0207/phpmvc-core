@@ -7,6 +7,7 @@ use App\Core\Database\Database;
 use App\Core\Database\DBModel;
 use App\Core\Request\Request;
 use App\Core\Response\Response;
+use App\Core\View\CustomSmarty;
 use App\Core\View\Twig;
 use App\Model\User;
 
@@ -26,24 +27,24 @@ class Application
     public Request $request;
     public Response $response;
     public Session $session;
-    public Twig $twig;
     public ?DBModel $user;
     public ?BaseController $controller = null;
+    public CustomSmarty $smarty;
 
-    public function __construct(string $rootPath, array $config)
+    public function __construct(string $rootPath, array $config, CustomSmarty $smarty)
     {
         self::$ROOT_DIR = $rootPath;
         self::$APPLICATION = $this;
         $this->request = new Request();
-        $this->response = new Response();
+        $this->response = new Response($smarty);
         $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
         $this->database = new Database($config['db']);
     }
 
-    public function setTwigTemplate(Twig $twig)
+    public function setSmartyTemplate(CustomSmarty $smarty)
     {
-        $this->twig = $twig;
+        $this->smarty = $smarty;
     }
 
     /**

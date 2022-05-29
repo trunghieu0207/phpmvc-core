@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\route;
 
+use App\Controllers\SampleController;
 use App\Core\Application;
 use App\Core\Router;
 
@@ -19,6 +20,6 @@ class Route
 
     public function register()
     {
-
+        $this->router->get('/', [SampleController::class, 'sample']);
     }
 }
